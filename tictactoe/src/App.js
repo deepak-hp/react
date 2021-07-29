@@ -86,11 +86,12 @@ const App = () => {
 
   const changeItem = (itemNumber) => {
     if (winMessage) {
+      // return respective toast message
       if (winMessage === "Draw!") return toast(winMessage, { type: "info" });
       else return toast(winMessage, { type: "success" });
     }
     if (itemArray[itemNumber] === "empty") {
-      itemArray[itemNumber] = isCross ? "cross" : "circle";
+      itemArray[itemNumber] = isCross ? "cross" : "circle"; // 1st time "isCross" will be false, so first 1st time it will be circles turn
       setIsCross(!isCross);
     } else {
       return toast("Already filled", { type: "warning" });
@@ -104,10 +105,19 @@ const App = () => {
       <Row>
         <Col md={6} className="offset-md-3">
           {winMessage ? (
-            <div className="mb-2 mt-2">
-              <h1 className="text-success text-uppercase text-center">
+            <div className="my-2">
+              {winMessage === "Draw!" ? (
+                <h1 className="text-warning text-uppercase text-center">
+                  {winMessage}
+                </h1>
+              ) : (
+                <h1 className="text-success text-uppercase text-center">
+                  {winMessage}
+                </h1>
+              )}
+              {/* <h1 className="text-success text-uppercase text-center">
                 {winMessage}
-              </h1>
+              </h1> */}
               <Button
                 color="success"
                 block
@@ -119,13 +129,14 @@ const App = () => {
             </div>
           ) : (
             <h1 className="text-center text-warning">
-              {isCross ? "Cross" : "Circle"} turns
+              {/* {isCross ? "Cross" : "Circle"}'s turns */}
+              {isCross ? <Icon name="cross" /> : <Icon name="circle" />} turn
             </h1>
           )}
           <div className="grid">
             {itemArray.map((item, index) => (
               <Card
-                color="warning"
+                color="dark"
                 onClick={() => changeItem(index)}
                 className="card-animation"
               >
